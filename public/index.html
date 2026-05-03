@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Node Dictionary</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="backdrop" class="backdrop"></div>
+  <div id="toast" class="toast"></div>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo"><span>ND</span></div>
+        <div>
+          <strong>Node Dictionary</strong>
+          <div class="meta">Conversas por assunto</div>
+        </div>
+      </div>
+      <div class="sidebar-body">
+        <p class="sidebar-title">Conversas</p>
+        <div id="chatTabs" class="tabs"></div>
+      </div>
+      <div class="sidebar-footer">
+        <div id="storageInfo" class="storage-info"></div>
+        <div class="status-bar">
+          <div id="statusDot" class="status-dot offline"></div>
+          <span id="statusText" class="status-text">Conectando...</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- PAINEL CHAT -->
+    <section class="panel panel-chat">
+      <div class="panel-header">
+        <button id="menuBtn" class="menu-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="panel-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Chat
+        </div>
+        <button id="clear" class="btn-ghost btn-sm">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+          Limpar
+        </button>
+      </div>
+
+      <div id="messages" class="messages-box">
+        <div class="empty-state">
+          <div class="empty-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <p>Pergunte qualquer coisa sobre<br>Node.js, Express ou APIs.</p>
+          <span class="empty-hint">O chat é independente do dicionário →</span>
+        </div>
+      </div>
+
+      <div id="typingIndicator" class="typing-indicator hidden">
+        <div class="typing-dots"><span></span><span></span><span></span></div>
+        <span>Analisando...</span>
+      </div>
+
+      <div class="input-row">
+        <input id="input" type="text" placeholder="Pergunte sobre Node.js, Express, APIs..." autocomplete="off"/>
+        <button id="send" class="btn-primary icon-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- PAINEL DICIONÁRIO -->
+    <section class="panel panel-dict">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Dicionário de Código
+        </div>
+        <button id="clearCodeBtn" class="btn-ghost btn-sm">Limpar</button>
+      </div>
+
+      <div class="editor-wrapper">
+        <div class="editor-topbar">
+          <span class="code-lang">node.js</span>
+          <div class="limit-control">
+            <label for="maxTerms">Limite</label>
+            <input id="maxTerms" type="number" min="10" max="2000" value="600" />
+          </div>
+        </div>
+        <textarea id="codeBox" placeholder="// Cole aqui seu código Node.js&#10;// Exemplo: const express = require('express')"></textarea>
+      </div>
+
+      <div class="dict-actions">
+        <button id="translateCode" class="btn-primary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Traduzir
+        </button>
+        <button id="lineCommentBtn" class="btn-secondary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Comentar
+        </button>
+        <button id="improveCodeBtn" class="btn-secondary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Corrigir
+        </button>
+      </div>
+
+      <div class="dict-results">
+        <div id="dictLoading" class="section-loading hidden">
+          <div class="spinner"></div>
+          <span>Buscando na MDN e analisando com IA...</span>
+        </div>
+        <div id="codeAnalysis"></div>
+        <div id="dictionary"></div>
+      </div>
+    </section>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
