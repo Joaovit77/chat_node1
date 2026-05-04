@@ -659,6 +659,7 @@ async function runLineComments() {
       addMessage("bot", "Não encontrei comentários linha a linha para este trecho.");
     }
     addMessage("bot", "Quer que eu aprofunde algum bloco específico?");
+    if (isMobile()) showChatPanel();
   } catch {
     addMessage("bot", "Falha ao comentar o código.");
     showToast("Erro ao comentar código.", "error");
@@ -695,6 +696,7 @@ async function runImproveCode() {
     addCodeMessage(data.codigoMelhorado || code, "Código melhorado");
     await saveAssistantMessage(`Código melhorado:\n${data.codigoMelhorado || code}`);
     addMessage("bot", "Quer que eu aplique essas melhorias em passos menores?");
+    if (isMobile()) showChatPanel();
     showToast("Código melhorado com sucesso!", "success");
   } catch {
     addMessage("bot", "Falha ao corrigir o código.");
