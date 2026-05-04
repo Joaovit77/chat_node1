@@ -278,7 +278,8 @@ body {
 .panel {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
   border-right: 1px solid var(--stroke);
 }
