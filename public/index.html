@@ -12,6 +12,11 @@
   <div id="backdrop" class="backdrop"></div>
   <div id="toast" class="toast"></div>
 
+  <div class="mobile-switcher" aria-label="Alternar seções mobile">
+    <button id="mobileSwitchChat" class="btn-secondary mobile-switch active" type="button">Chat</button>
+    <button id="mobileSwitchDict" class="btn-secondary mobile-switch" type="button">Dicionário</button>
+  </div>
+
   <div class="app-layout">
 
     <!-- SIDEBAR -->
@@ -37,7 +42,7 @@
     </aside>
 
     <!-- PAINEL CHAT -->
-    <section class="panel panel-chat">
+    <section class="panel panel-chat active">
       <div class="panel-header">
         <button id="menuBtn" class="menu-btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>

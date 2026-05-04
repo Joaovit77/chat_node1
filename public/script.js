@@ -24,6 +24,10 @@ const statusDotEl = document.getElementById("statusDot");
 const statusDotDesktopEl = document.getElementById("statusDotDesktop");
 const clearCodeBtn = document.getElementById("clearCodeBtn");
 const storageInfoEl = document.getElementById("storageInfo");
+const mobileSwitchChatBtn = document.getElementById("mobileSwitchChat");
+const mobileSwitchDictBtn = document.getElementById("mobileSwitchDict");
+const panelChatEl = document.querySelector(".panel-chat");
+const panelDictEl = document.querySelector(".panel-dict");
 
 // ===========================
 // CONSTANTES E ESTADO
@@ -211,6 +215,18 @@ function closeMobileMenu() {
   sidebarEl.classList.remove("open");
   backdropEl.classList.remove("show");
 }
+
+function setMobileSection(section) {
+  if (!isMobile()) return;
+  const showChat = section === "chat";
+  panelChatEl?.classList.toggle("active", showChat);
+  panelDictEl?.classList.toggle("active", !showChat);
+  mobileSwitchChatBtn?.classList.toggle("active", showChat);
+  mobileSwitchDictBtn?.classList.toggle("active", !showChat);
+}
+
+function showChatPanel() { setMobileSection("chat"); }
+function showDictPanel() { setMobileSection("dict"); }
 
 // ===========================
 // MENSAGENS
@@ -697,6 +713,8 @@ inputEl.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey)
 clearBtn.addEventListener("click", clearHistory);
 menuBtn.addEventListener("click", openMobileMenu);
 backdropEl.addEventListener("click", closeMobileMenu);
+mobileSwitchChatBtn?.addEventListener("click", showChatPanel);
+mobileSwitchDictBtn?.addEventListener("click", showDictPanel);
 
 if (clearCodeBtn) {
   clearCodeBtn.addEventListener("click", () => {
@@ -721,6 +739,7 @@ improveCodeBtn.addEventListener("click", () => {
 
 window.addEventListener("resize", () => {
   if (!isMobile()) closeMobileMenu();
+  if (isMobile() && !panelChatEl?.classList.contains("active") && !panelDictEl?.classList.contains("active")) showChatPanel();
 });
 
 // ===========================
