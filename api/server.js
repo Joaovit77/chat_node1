@@ -434,6 +434,12 @@ function buildLocalCodeAnalysis(code) {
   return {
     resumo: "Análise local sem IA externa. O trecho parece funcional, com oportunidades de robustez.",
     pontosFortes, riscos, melhorias,
+    recomendacoes: [
+      "Refatore funções muito longas para melhorar legibilidade.",
+      "Adicione tratamento de erro e validação de entradas.",
+      "Use nomes de variáveis mais descritivos e consistentes.",
+    ],
+    detalhamento: "A análise local identifica padrões básicos de qualidade, mas recomenda separar responsabilidades e validar todas as entradas antes de processar. Considere também reduzir acoplamento e aplicar melhores práticas de async/await.",
     comentarioChat: "Analisei seu código. Quer que eu foque em performance, segurança ou organização?",
     perguntaInterativa: "O que você quer melhorar primeiro: segurança, performance ou legibilidade?",
   };
@@ -467,10 +473,10 @@ async function buildAICodeAnalysis(code) {
     const text = await callOpenAI([
       {
         role: "system",
-        content: "Você analisa código Node.js. Responda SOMENTE JSON válido, sem markdown, com as chaves: resumo (string), pontosFortes (array string), riscos (array string), melhorias (array string), comentarioChat (string), perguntaInterativa (string). Escreva em português do Brasil.",
+        content: "Você analisa código Node.js. Responda SOMENTE JSON válido, sem markdown, com as chaves: resumo (string), pontosFortes (array string), riscos (array string), melhorias (array string), recomendacoes (array string), detalhamento (string), comentarioChat (string), perguntaInterativa (string). Seja profundo: aponte problemas de segurança, performance, legibilidade, estilo, abuso de complexidade e oportunidades de refatoração. Escreva em português do Brasil.",
       },
       { role: "user", content: `Analise o código:\n\n${code}` },
-    ], 800);
+    ], 1200);
 
     const parsed = parseJsonFromText(text);
     return {
@@ -478,6 +484,8 @@ async function buildAICodeAnalysis(code) {
       pontosFortes: Array.isArray(parsed.pontosFortes) ? parsed.pontosFortes.map(String) : [],
       riscos: Array.isArray(parsed.riscos) ? parsed.riscos.map(String) : [],
       melhorias: Array.isArray(parsed.melhorias) ? parsed.melhorias.map(String) : [],
+      recomendacoes: Array.isArray(parsed.recomendacoes) ? parsed.recomendacoes.map(String) : [],
+      detalhamento: String(parsed.detalhamento || ""),
       comentarioChat: String(parsed.comentarioChat || ""),
       perguntaInterativa: String(parsed.perguntaInterativa || ""),
     };

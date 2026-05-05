@@ -586,7 +586,12 @@ function renderAnalysis(analise) {
           <div class="analysis-card-title">↑ Melhorias</div>
           <ul class="analysis-list">${listHtml(analise.melhorias)}</ul>
         </div>
+        <div class="analysis-card recommendations">
+          <div class="analysis-card-title">💡 Recomendações</div>
+          <ul class="analysis-list">${listHtml(analise.recomendacoes)}</ul>
+        </div>
       </div>
+      ${analise.detalhamento ? `<div class="analysis-detail"><div class="analysis-detail-title">Detalhamento</div><p>${escapeHtml(analise.detalhamento)}</p></div>` : ""}
     </div>
   `;
 }

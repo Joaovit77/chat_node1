@@ -720,7 +720,7 @@ button { font-family: var(--font); cursor: pointer; }
 
 .analysis-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -733,6 +733,7 @@ button { font-family: var(--font); cursor: pointer; }
 .analysis-card.strengths { border-color: rgba(52,211,153,0.18); background: rgba(52,211,153,0.04); }
 .analysis-card.risks { border-color: rgba(251,191,36,0.18); background: rgba(251,191,36,0.04); }
 .analysis-card.improvements { border-color: rgba(129,140,248,0.18); background: rgba(129,140,248,0.04); }
+.analysis-card.recommendations { border-color: rgba(56,189,248,0.18); background: rgba(56,189,248,0.05); }
 
 .analysis-card-title {
   font-size: 10px;
@@ -776,6 +777,28 @@ button { font-family: var(--font); cursor: pointer; }
 .analysis-card.strengths .analysis-list li { color: #6ee7b7; }
 .analysis-card.risks .analysis-list li { color: #fde68a; }
 .analysis-card.improvements .analysis-list li { color: #c7d2fe; }
+.analysis-card.recommendations .analysis-list li { color: #93c5fd; }
+
+.analysis-detail {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  background: rgba(15, 23, 42, 0.65);
+}
+
+.analysis-detail-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+.analysis-detail p {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--text-2);
+}
 
 /* Dicionário de termos */
 #dictionary:empty { display: none; }
